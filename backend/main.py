@@ -1,23 +1,35 @@
 from typing import Optional
 from fastapi import FastAPI
+from pydantic import BaseModel
 import requests
 import pandas as pd
 
 app = FastAPI()
 URL = 'https://api.elrond.com/accounts/{}/transactions?size=10000'
+URL_CURRENCY = 'https://api.coingecko.com/api/v3/simple/price?ids=elrond-erd-2&vs_currencies=usd'
 wallet = 'erd152h9mns0luddcd4dedpw9w8l7dczalykdsnvr724u6g6rwprcq7s9xm2kl'
+
+class Wallet(BaseModel):
+    wallet_hash: str
 
 @app.get("/")
 def read_root():
     return {"Hello": "World"}
 
 
-@app.get("/gas-fee")
-def get_gas_fee():
+@app.post("/gas-fee")
+def get_gas_fee(wallet: Wallet):
+    user_wallet = wallet.wallet_hash
     gas_fee = 0
-    r = requests.get(URL.format(wallet))
-    json_obj = pd.read_json(r.text)
+    wallet_history = requests.get(URL.format(user_wallet))
+    currency_data = requests.get(URL_CURRENCY)
+    egld_price = currency_data.json()
+    egld_price = egld_price["elrond-erd-2"]["usd"] 
+    json_obj = pd.read_json(wallet_history.text)
+    transactions = len(json_obj["fee"])
     for fee in json_obj["fee"]:
         gas_fee += int(fee)
     egld_fee = gas_fee/1000000000000000000
-    return egld_fee
+    avg_fee = egld_fee/transactions
+    egld_price = egld_fee * egld_price
+    return {"transactions": transactions, "fee": egld_fee, "avgFee": avg_fee, "egldPrice": egld_price}

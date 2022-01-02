@@ -10,9 +10,9 @@ const Footer = () => {
             target: "_blank",
           }}
           className="d-flex align-items-center"
-          href="https://elrond.com/"
+          href="https://twitter.com/nazevice"
         >
-          Made with <HeartIcon className="mx-1" /> by Elrond Network.
+          Made by Naze Vice.
         </a>
       </div>
     </footer>

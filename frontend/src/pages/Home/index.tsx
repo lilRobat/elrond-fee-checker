@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import * as Dapp from "@elrondnetwork/dapp";
 import { Link } from "react-router-dom";
 import { dAppName } from "config";
 import { routeNames } from "routes";
@@ -11,11 +12,14 @@ const Home = () => {
   const [fee, setFee] = useState("⚡");
   const [avgFee, setAvgFee] = useState("⚡");
   const [feeUSD, setFeeUSD] = useState("⚡");
-  const fetchGas = async () => {
+  const {
+    address
+  } = Dapp.useContext();
+  const fetchGas = async (walletAddress:String) => {
     const response = await fetch("/gas-fee", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({wallet_hash: wallet})
+    body: JSON.stringify({wallet_hash: walletAddress})
   })
     const data = await response.json();
     console.log(data);
@@ -24,11 +28,14 @@ const Home = () => {
     setAvgFee(data.avgFee)
     setFeeUSD(data.egldPrice)
   };
+  useEffect(() => {
+    fetchGas(address)
+  }, [address]);
   return (
     <div className="d-flex flex-fill align-items-center container">
       <div className="row w-100">
         <h1>
-          You've spent {fee} egld on gas. Right now, that's {feeUSD}.
+          You've spent {fee} egld on gas. Right now, that's {feeUSD}$.
           <br />You send {transactions} transactions, with an average gas fee of {avgFee} egld.
         </h1>
         <div className="col-12 col-md-8 col-lg-5 mx-auto">
@@ -39,6 +46,7 @@ const Home = () => {
               </h2>
 
               <p className="mb-3">
+                 {address}
                 Use this app to check your gas fees.
                 <br /> Login using your Elrond wallet.
               </p>
@@ -51,11 +59,12 @@ const Home = () => {
                 Login
               </Link>
               <p className="mb-3">
-                or paste your wallet address here:
+                <br />
+                or paste your wallet address (not the Herotag!) here:
               </p>
               <div>
                 <input onChange={(e) => setWallet(e.target.value)}></input> <br />
-                <a onClick={() => fetchGas()} className="btn btn-primary mt-3">Search</a>
+                <a onClick={() => fetchGas(wallet)} className="btn btn-primary mt-3">Search</a>
               </div>
             </div>
           </div>

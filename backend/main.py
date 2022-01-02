@@ -7,7 +7,6 @@ import pandas as pd
 app = FastAPI()
 URL = 'https://api.elrond.com/accounts/{}/transactions?size=10000'
 URL_CURRENCY = 'https://api.coingecko.com/api/v3/simple/price?ids=elrond-erd-2&vs_currencies=usd'
-wallet = 'erd152h9mns0luddcd4dedpw9w8l7dczalykdsnvr724u6g6rwprcq7s9xm2kl'
 
 class Wallet(BaseModel):
     wallet_hash: str
@@ -32,4 +31,4 @@ def get_gas_fee(wallet: Wallet):
     egld_fee = gas_fee/1000000000000000000
     avg_fee = egld_fee/transactions
     egld_price = egld_fee * egld_price
-    return {"transactions": transactions, "fee": egld_fee, "avgFee": avg_fee, "egldPrice": egld_price}
+    return {"transactions": transactions, "fee": "{:.4f}".format(egld_fee), "avgFee": "{:.6f}".format(avg_fee), "egldPrice": "{:.2f}".format(egld_price)}

@@ -34,9 +34,9 @@ const Home = () => {
   return (
     <div className="d-flex flex-fill align-items-center container">
       <div className="row w-100">
-        <h1>
-          You've spent {fee} egld on gas. Right now, that's {feeUSD}$.
-          <br />You send {transactions} transactions, with an average gas fee of {avgFee} egld.
+        <h1 className="text-center mx-auto">
+            You've spent {fee} egld on gas. Right now, that's {feeUSD}$.
+            <br />You send {transactions} transactions, with an average gas fee of {avgFee} egld.
         </h1>
         <div className="col-12 col-md-8 col-lg-5 mx-auto">
           <div className="card shadow-sm rounded p-4 border-0">
@@ -46,7 +46,6 @@ const Home = () => {
               </h2>
 
               <p className="mb-3">
-                 {address}
                 Use this app to check your gas fees.
                 <br /> Login using your Elrond wallet.
               </p>

@@ -2,9 +2,7 @@ import React from "react";
 import * as Dapp from "@elrondnetwork/dapp";
 import { dAppName } from "config";
 import withPageTitle from "./components/PageTitle";
-import Dashboard from "./pages/Dashboard";
 import Home from "./pages/Home";
-import Transaction from "./pages/Transaction";
 
 type RouteType = Dapp.RouteType & { title: string };
 
@@ -22,17 +20,6 @@ const routes: RouteType[] = [
     path: "/",
     title: "Home",
     component: Home,
-  },
-  {
-    path: "/dashboard",
-    title: "Dashboard",
-    component: Dashboard,
-    authenticatedRoute: true,
-  },
-  {
-    path: "/transaction",
-    title: "Transaction",
-    component: Transaction,
   },
 ];
 

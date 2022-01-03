@@ -1,5 +1,6 @@
 # @lilRobat/elrond-fee-checker
 This repository contains a create-react-app for the frontend and a fastapi backend.
+live demo: https://www.egldfees.com
 
 ## Requirements
 

@@ -16,7 +16,7 @@ const Home = () => {
     address
   } = Dapp.useContext();
   const fetchGas = async (walletAddress:String) => {
-    const response = await fetch("/gas-fee", {
+    const response = await fetch("https://egldfees.com:8000/gas-fee", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({wallet_hash: walletAddress})

@@ -1,10 +1,24 @@
 from typing import Optional
 from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 import requests
 import pandas as pd
 
 app = FastAPI()
+
+origins = [
+    "https://egldfees.com",
+]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
 URL = 'https://api.elrond.com/accounts/{}/transactions?size=10000'
 URL_CURRENCY = 'https://api.coingecko.com/api/v3/simple/price?ids=elrond-erd-2&vs_currencies=usd'
 

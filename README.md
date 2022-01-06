@@ -40,15 +40,25 @@ Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 The page will reload if you make edits.\
 You will also see any lint errors in the console.
 
-### Step 4. Starting the backend server
+### Step 4. Create venv
 
 Move to the `backend` folder and run:
 
 ```bash
-uvicorn main:app --reload
+ python -m venv venv
+source env/bin/activate (on windows: .\venv\Scripts\activate)
+pip install -r requirements.txt
 ```
 
-### Step 5. Build for testing and production use
+### Step 5. Starting the backend server
+
+Still in the venv environment run:
+
+```bash
+python server.py
+```
+
+### Step 6. Build for testing and production use
 
 A build of the app is necessary to deploy for testing purposes or for production use.
 To build the project run:
